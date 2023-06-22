@@ -1,6 +1,7 @@
 from flask import jsonify, request
 from database.db import connectdb
 
+# Add a new client
 def add_cliente():
     conn = connectdb()
     cur = conn.cursor()
@@ -20,6 +21,7 @@ def add_cliente():
     print('Empleado creado')
     return "Empleado agregado"
 
+# Obtain a new client
 
 def get_clientes():
     conn = connectdb()
@@ -29,6 +31,8 @@ def get_clientes():
     data = [{'id_cliente': dato[0], 'nombre': dato[1], 'apellidos': dato[2], 'edad': dato[3], 'telefono': dato[4],'direccion': dato[5], 'email': dato[6]} for dato in datos_clientes]
     conn.close()
     return jsonify(data)
+
+# Obtain a client by id
 
 def obtener_cliente_por_id(id_cliente):
     conn = connectdb()
@@ -41,4 +45,15 @@ def obtener_cliente_por_id(id_cliente):
         conn.close()
         return jsonify(dato)
     else:
-        return 'Cliente no encontrado'
+        return 'The client was not found'
+    
+# Delete a cliente
+
+def del_cliente(id_cliente):
+    conn = connectdb()
+    cur = conn.cursor()
+    cur.execute('DELETE FROM clientes WHERE id_cliente = %s', (id_cliente,))
+    conn.commit()
+    conn.close()
+    print("The client was deleted !!")
+    return ""
