@@ -18,7 +18,10 @@ app.route('/clientes', methods=['GET'])(get_clientes)
 app.route('/clientes/<int:id_cliente>', methods=['GET'])(obtener_cliente_por_id)
 app.route('/clientes/<int:id_cliente>', methods=['DELETE'])(del_cliente)
 app.route("/clientes/<int:id_cliente>", methods=["PATCH"])(update_cliente)
-
+app.route('/clientes/tel/<int:cliente_telefono>', methods=['GET'])(obtener_cliente_por_telefono)
+app.route('/clientes/email/<cliente_email>', methods=['GET'])(get_client_by_email)
+app.route('/clientes/edad/<int:cliente_edad>', methods=['GET'])(get_clients_over_18)
+app.route('/clientes/mayor/<int:id_cliente>', methods=['GET'])(check_age)
 #PAGOS
 app.route("/pagos", methods=["GET"])(get_payments)
 

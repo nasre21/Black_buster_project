@@ -93,3 +93,66 @@ def update_cliente(id_cliente):
     conn.close()
 
     return 'Dates modified'
+
+# Get client by phone number
+
+def obtener_cliente_por_telefono(cliente_telefono):
+    conn = connectdb()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM clientes WHERE telefono = %s', (cliente_telefono,))
+    clientes = cur.fetchall()
+    print("clientes")
+    if clientes:
+        data = [{'id_cliente': dato[0], 'nombre': dato[1], 'apellidos': dato[2], 'edad': dato[3], 'telefono': dato[4],'direccion': dato[5], 'email': dato[6]} for dato in clientes]
+        conn.close()
+        return jsonify(data)
+    else:
+        return 'No client was found with this phone number'
+    
+# Get client by email address
+
+def get_client_by_email(cliente_email):
+    conn = connectdb()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM clientes WHERE email = %s', (cliente_email,))
+    clientes = cur.fetchall()
+    print("clientes")
+    if clientes:
+        data = [{'id_cliente': dato[0], 'nombre': dato[1], 'apellidos': dato[2], 'edad': dato[3], 'telefono': dato[4],'direccion': dato[5], 'email': dato[6]} for dato in clientes]
+        conn.close()
+        return jsonify(data)
+    else:
+        return 'No client was found with this email address'
+
+
+# Get client by email address
+
+def get_clients_over_18(cliente_edad):
+    conn = connectdb()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM clientes WHERE edad >= %s', (cliente_edad,))
+    clientes = cur.fetchall()
+    print("clientes")
+    if cliente_edad >= 18:
+        data = [{'id_cliente': dato[0], 'nombre': dato[1], 'apellidos': dato[2], 'edad': dato[3], 'telefono': dato[4],'direccion': dato[5], 'email': dato[6]} for dato in clientes]
+        conn.close()
+        return jsonify(data)
+    else:
+        return 'No results were found'
+    
+    # Obtain a client by id
+
+def check_age(id_cliente):
+    conn = connectdb()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM clientes WHERE id_cliente = %s', (id_cliente,))
+    dato_cliente = cur.fetchone()
+    print("dato_cliente")
+    if dato_cliente[3] >= 18:
+        # dato = {"""'id_cliente': dato_cliente[0], 'nombre': dato_cliente[1],
+        #         'apellidos': dato_cliente[2], 'edad': dato_cliente[3],
+        #         'telefono': dato_cliente[4],'direccion': dato_cliente[5], 'email': dato_cliente[6]"""}
+        conn.close()
+        return 'You can rent this movie'
+    else:
+        return 'You are underage to rent this movie'
