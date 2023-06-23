@@ -89,16 +89,62 @@ def update_pelicula(id_pelicula):
 
     return 'Dato modificado'
 
-def get_year(año):
+#def get_year(año):
+    # conn = connectdb()
+    # cur = conn.cursor()
+    # cur.execute('SELECT *FROM peliculas WHERE YEAR(fecha) = %s;', (año))
+    # dato_movie = cur.fetchone()
+    # print("dato_movie")
+
+    # if dato_movie:
+    #     dato = {'id_pelicula': dato_movie[0], 'titulo': dato_movie[1], 'año': dato_movie[2],'director': dato_movie[3],'categoria': dato_movie[4],'precio': dato_movie[5]}
+    #     conn.close()
+    #     return jsonify(dato)
+    # else:
+    #     return 'pelicula no encontrado'
+    
+    
+def max_peliculas():
     conn = connectdb()
     cur = conn.cursor()
-    cur.execute('SELECT *FROM peliculas WHERE YEAR(fecha) = %s;', (año))
+    cur.execute('SELECT * FROM peliculas WHERE precio = (SELECT MAX(precio) FROM peliculas)')
     dato_movie = cur.fetchone()
-    print("dato_movie")
+    respuesta = {
+        "id":dato_movie[0],
+        "titulo": dato_movie[1],
+        "year":dato_movie[2],
+         "director": dato_movie[3],
+        "categoria": dato_movie[4],
+        "precio":dato_movie[5], 
+    }
+    conn.close()
+    print("pelicula eliminada !!")
+    return jsonify(respuesta, 200)
 
-    if dato_movie:
-        dato = {'id_pelicula': dato_movie[0], 'titulo': dato_movie[1], 'año': dato_movie[2],'director': dato_movie[3],'categoria': dato_movie[4],'precio': dato_movie[5]}
-        conn.close()
-        return jsonify(dato)
-    else:
-        return 'pelicula no encontrado'
+def min_peliculas():
+    conn = connectdb()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM peliculas WHERE precio = (SELECT MIN(precio) FROM peliculas)')
+    dato_movie = cur.fetchone()
+    respuesta = {
+        "id":dato_movie[0],
+        "titulo": dato_movie[1],
+        "year":dato_movie[2],
+         "director": dato_movie[3],
+        "categoria": dato_movie[4],
+        "precio":dato_movie[5], 
+    }
+    conn.close()
+    print("pelicula eliminada !!")
+    return jsonify(respuesta, 200)
+
+ 
+ 
+def categoria_peliculas():
+    conn = connectdb()
+    cur = conn.cursor()
+    cur.execute('SELECT categoria FROM pelicuas')
+    dato_movie = cur.fetchall()
+    print(dato_movie)
+    return (dato_movie)
+ 
