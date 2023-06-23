@@ -31,8 +31,10 @@ app.route("/pagos_del/<int:id_pago>", methods=["DELETE"])(del_payment)
 app.route("/pagos_desc", methods=["GET"])(get_payment_desc)
 
 app.route("/pagos_asc", methods=["GET"])(get_payment_asc)
-# Roots cliente nueva
-app.route('/cliente_add', methods=['POST'])(add_cliente)
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
