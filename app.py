@@ -3,6 +3,10 @@ from routes.empleados import *
 from routes.cliente import *
 from routes.pagos import *
 
+
+
+from routes.films import *
+
 app = Flask(__name__)
 
 # Rutas empleados
@@ -35,6 +39,22 @@ app.route("/pagos_desc", methods=["GET"])(get_payment_desc)
 
 app.route("/pagos_asc", methods=["GET"])(get_payment_asc)
 
+
+
+
+
+#Movies Path
+
+app.route('/movies_add', methods =['POST'])(add_movie)
+app.route('/movies', methods =['GET'])(get_movie)
+app.route('/movies/<int:id_pelicula>', methods=['GET'])(get_one)
+app.route('/movies_del/<int:id_pelicula>', methods=['DELETE'])(del_movie)
+app.route("/movies/<int:id_pelicula>", methods=["PATCH"])(update_pelicula)
+app.route('/movies/<int:id_pelicula>', methods=['GET'])(get_one)
+
+# Consulting
+
+app.route('/movies/<int:año>',methods=['GET'])(get_year)
 
 
 
