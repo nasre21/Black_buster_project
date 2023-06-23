@@ -22,8 +22,8 @@ app.route('/clientes/<int:id_cliente>', methods=['GET'])(obtener_cliente_por_id)
 app.route('/movies_add', methods =['POST'])(add_movie)
 app.route('/movies', methods =['GET'])(get_movie)
 app.route('/movies/<int:id_pelicula>', methods=['GET'])(get_one)
-
-
+app.route('/movies_del/<int:id_pelicula>', methods=['DELETE'])(del_movie)
+app.route("/movies/<int:id_pelicula>", methods=["PATCH"])(update_pelicula)
 
 
 

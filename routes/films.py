@@ -44,3 +44,47 @@ def get_one(id_pelicula):
         return jsonify(dato)
     else:
         return 'pelicula no encontrado'
+
+def del_movie(id_pelicula):
+    conn = connectdb()
+    cur = conn.cursor()
+    cur.execute('DELETE FROM peliculas WHERE id_pelicula= %s', (id_pelicula,))
+    conn.commit()
+    conn.close()
+    print("pelicula eliminada !!")
+    return ""
+
+
+def update_pelicula(id_pelicula):
+    conn = connectdb()
+    cur = conn.cursor()
+
+    data = request.get_json()
+
+    if "titulo" in data:
+        titulo = data["titulo"]
+        cur.execute('UPDATE peliculas SET titulo = %s WHERE id_pelicula = %s', (titulo, id_pelicula))
+
+    if "año" in data:
+        año = data["año"]
+        cur.execute('UPDATE peliculas SET año = %s WHERE id_pelicula = %s', (año, id_pelicula))
+
+    if "director" in data:
+        director = data["director"]
+        cur.execute('UPDATE peliculas SET director= %s WHERE id_pelicula = %s', (director, id_pelicula))
+        
+    if "categoria" in data:
+        categoria = data["categoria"]
+        cur.execute('UPDATE peliculas SET categoria= %s WHERE id_pelicula = %s', (categoria, id_pelicula))
+        
+        
+    if "precio" in data:
+        precio = data["precio"]
+        cur.execute('UPDATE peliculas SET precio= %s WHERE id_pelicula = %s', (precio, id_pelicula))    
+        
+        
+
+    conn.commit()
+    conn.close()
+
+    return 'Dato modificado'
