@@ -12,9 +12,11 @@ app.route('/empleados_del/<int:id_empleado>', methods=['DELETE'])(del_empleado)
 app.route("/empleado/<int:id_empleado>", methods=["PATCH"])(update_empleado)
 
 # Roots clients
-app.route('/cliente_add', methods=['POST'])(add_cliente)
+app.route('/clientes', methods=['POST'])(add_cliente)
 app.route('/clientes', methods=['GET'])(get_clientes)
 app.route('/clientes/<int:id_cliente>', methods=['GET'])(obtener_cliente_por_id)
+app.route('/clientes/<int:id_cliente>', methods=['DELETE'])(del_cliente)
+app.route("/clientes/<int:id_cliente>", methods=["PATCH"])(update_cliente)
 
 if __name__ == '__main__':
     app.run(debug=True)

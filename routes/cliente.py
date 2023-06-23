@@ -57,3 +57,39 @@ def del_cliente(id_cliente):
     conn.close()
     print("The client was deleted !!")
     return ""
+
+# Update a client
+
+def update_cliente(id_cliente):
+    conn = connectdb()
+    cur = conn.cursor()
+
+    data = request.get_json()
+
+    if "nombre" in data:
+        nombre = data["nombre"]
+        cur.execute('UPDATE clientes SET nombre = %s WHERE id_cliente = %s', (nombre, id_cliente))
+
+    if "apellidos" in data:
+        apellidos = data["apellidos"]
+        cur.execute('UPDATE clientes SET apellidos = %s WHERE id_cliente = %s', (apellidos, id_cliente))
+
+    if "edad" in data:
+        edad = data["edad"]
+        cur.execute('UPDATE clientes SET edad = %s WHERE id_cliente = %s', (edad, id_cliente))
+
+    if "telefono" in data:
+        telefono = data["telefono"]
+        cur.execute('UPDATE clientes SET telefono = %s WHERE id_cliente = %s', (telefono, id_cliente))
+
+    if "direccion" in data:
+        direccion = data["direccion"]
+        cur.execute('UPDATE clientes SET direccion = %s WHERE id_cliente = %s', (direccion, id_cliente)) 
+
+    if "email" in data:
+        email = data["email"]
+        cur.execute('UPDATE clientes SET email = %s WHERE id_cliente = %s', (email, id_cliente))       
+    conn.commit()
+    conn.close()
+
+    return 'Dates modified'
