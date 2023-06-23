@@ -25,9 +25,5 @@ app.route("/pagos", methods=["GET"])(get_payments)
 app.route("/pago/<int:id_pago>", methods=["GET"])(get_payment_by_id)
 
 
-
-# Roots cliente nueva
-app.route('/cliente_add', methods=['POST'])(add_cliente)
-
 if __name__ == '__main__':
     app.run(debug=True)
