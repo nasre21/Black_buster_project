@@ -24,6 +24,11 @@ app.route('/movies', methods =['GET'])(get_movie)
 app.route('/movies/<int:id_pelicula>', methods=['GET'])(get_one)
 app.route('/movies_del/<int:id_pelicula>', methods=['DELETE'])(del_movie)
 app.route("/movies/<int:id_pelicula>", methods=["PATCH"])(update_pelicula)
+app.route('/movies/<int:id_pelicula>', methods=['GET'])(get_one)
+
+# Consulting
+
+app.route('/movies/<int:año>',methods=['GET'])(get_year)
 
 
 
