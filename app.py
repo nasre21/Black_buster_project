@@ -2,6 +2,8 @@ from flask import Flask
 from routes.empleados import *
 from routes.cliente import *
 from routes.pagos import *
+from routes.alquiler import *
+from routes.inventario import *
 
 
 
@@ -40,8 +42,12 @@ app.route("/pagos_desc", methods=["GET"])(get_payment_desc)
 app.route("/pagos_asc", methods=["GET"])(get_payment_asc)
 
 
+# Routes Alquiler
+app.route('/alquiler/info/<titulo>', methods=['GET'])(obtener_info_por_titulo)
 
 
+# Routes inventario
+app.route('/inventario', methods=['GET'])(get_inventario)
 
 #Movies Path
 
