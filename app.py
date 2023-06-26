@@ -42,8 +42,11 @@ app.route("/pagos_desc", methods=["GET"])(get_payment_desc)
 app.route("/pagos_asc", methods=["GET"])(get_payment_asc)
 
 
-# Routes Alquiler
-app.route('/alquiler/info/<titulo>', methods=['GET'])(obtener_info_por_titulo)
+# Routes Alquiler""
+app.route("/alquiler/info/<string:titulo>", methods=["GET"])(obtener_info_por_titulo)
+app.route("/alquiler/info", methods=["GET"])(obtener_info_por_titulo_2)
+app.route("/alquiler/info/todas", methods=["GET"])(obtener_info_todas_peliculas)
+
 
 
 # Routes inventario
