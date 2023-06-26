@@ -48,4 +48,54 @@ def obtener_info_todas_peliculas():
         conn.close()
         return jsonify(data)
     else:
-        return 'The movies was not found'    
+        return 'The movies was not found'  
+    
+
+# Insert new movie in the register and add or delete in the inventary
+
+# Add a new client
+def add_rent():
+    conn = connectdb()
+    cur = conn.cursor()
+    data = request.get_json()
+    id_pelicula = data['id_pelicula']
+    id_cliente = data['id_cliente']
+    id_empleado = data['id_empleado']
+    fecha_devolucion = data['fecha_devolucion']
+    id_pago = data['id_pago']
+
+
+    cur.execute('INSERT INTO alquiler (id_pelicula, id_cliente, fecha_alquiler, id_empleado, fecha_devolucion, id_pago) VALUES (%s, %s, CURDATE(), %s, %s, %s)', (id_pelicula, id_cliente, id_empleado, fecha_devolucion, id_pago))
+    conn.commit()
+    conn.close()
+    restar_cantidad_inventario(id_pelicula)
+    print('Registro agregada')
+    return "Registro agregado"     
+
+
+def restar_cantidad_inventario(id_pelicula):
+    conn = connectdb()
+    cur = conn.cursor()
+
+    # Restar uno a la cantidad del inventario de la película
+    cur.execute("UPDATE inventario SET cantidad = cantidad - 1 WHERE id_pelicula = %s", (id_pelicula,))
+    conn.commit()
+
+    conn.close()
+
+
+
+
+#get all in rent table
+def obtener_info_todas_alquiler():
+    conn = connectdb()
+    cur = conn.cursor()
+    cur.execute('select * from alquiler')
+    dato_alquiler = cur.fetchall()
+    print("dato_alquiler")
+    if dato_alquiler:
+        data = [{'id_pelicula': dato[1], 'id_cliente': dato[2], 'fecha_alquiler': dato[3], 'id_empleado': dato[4], 'fecha_devolucion': dato[5],'id_pago': dato[6]} for dato in dato_alquiler]
+        conn.close()
+        return jsonify(data)
+    else:
+        return 'The movies was not found'  
