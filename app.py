@@ -5,7 +5,7 @@ from routes.cliente import *
 
 
 from routes.films import *
-from routes.invetario import *
+from routes.inventario import *
 
 app = Flask(__name__)
 
