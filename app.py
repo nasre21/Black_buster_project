@@ -54,8 +54,12 @@ app.route('/movies/<int:id_pelicula>', methods=['GET'])(get_one)
 
 # Consulting
 
-app.route('/movies/<int:año>',methods=['GET'])(get_year)
 
+app.route('/movies/max', methods=['GET'])(max_peliculas)
+app.route('/movies/min', methods=['GET'])(min_peliculas)
+app.route('/movies/categoria', methods=['GET'])(categoria_peliculas)
+app.route('/movies/director', methods=['GET'])(director_peliculas)
+app.route('/movies/año', methods=['GET'])(año_peliculas)
 
 
 
