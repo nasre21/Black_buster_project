@@ -89,20 +89,7 @@ def update_pelicula(id_pelicula):
 
     return 'Dato modificado'
 
-#def get_year(año):
-    # conn = connectdb()
-    # cur = conn.cursor()
-    # cur.execute('SELECT *FROM peliculas WHERE YEAR(fecha) = %s;', (año))
-    # dato_movie = cur.fetchone()
-    # print("dato_movie")
 
-    # if dato_movie:
-    #     dato = {'id_pelicula': dato_movie[0], 'titulo': dato_movie[1], 'año': dato_movie[2],'director': dato_movie[3],'categoria': dato_movie[4],'precio': dato_movie[5]}
-    #     conn.close()
-    #     return jsonify(dato)
-    # else:
-    #     return 'pelicula no encontrado'
-    
     
 def max_peliculas():
     conn = connectdb()
@@ -142,9 +129,28 @@ def min_peliculas():
  
 def categoria_peliculas():
     conn = connectdb()
-    cur = conn.cursor()
-    cur.execute('SELECT categoria FROM pelicuas')
-    dato_movie = cur.fetchall()
+    cursor = conn.cursor()
+    cursor.execute("SELECT categoria FROM peliculas")
+    dato_movie = cursor.fetchall()
     print(dato_movie)
-    return (dato_movie)
+    return dato_movie
+ 
+def director_peliculas():
+    conn = connectdb()
+    cursor = conn.cursor()
+    cursor.execute("SELECT director FROM peliculas")
+    dato_movie = cursor.fetchall()
+    print(dato_movie)
+    return dato_movie
+
+def año_peliculas():
+    conn = connectdb()
+    cursor = conn.cursor()
+    cursor.execute("SELECT año FROM peliculas")
+    dato_movie = cursor.fetchall()
+    print(dato_movie)
+    return dato_movie
+
+ 
+ 
  
