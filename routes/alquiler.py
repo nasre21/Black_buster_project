@@ -99,3 +99,19 @@ def obtener_info_todas_alquiler():
         return jsonify(data)
     else:
         return 'The movies was not found'  
+
+#Return movie by id EN PROGRESS
+def return_movie(id_alquiler):
+    conn = connectdb()
+    cur = conn.cursor()
+
+    data = request.get_json()
+
+    if "fecha_devolucion" in data:
+        fecha_devolucion = data["fecha_devolucion"]
+        cur.execute('UPDATE alquiler SET fecha_devolucion = CURDATE() WHERE id_alquiler = %s', (fecha_devolucion, id_alquiler))
+
+    conn.commit()
+    conn.close()
+
+    return 'Register updated'
