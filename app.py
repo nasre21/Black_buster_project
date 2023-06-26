@@ -5,6 +5,7 @@ from routes.cliente import *
 
 
 from routes.films import *
+from routes.invetario import *
 
 app = Flask(__name__)
 
@@ -38,6 +39,11 @@ app.route('/movies/categoria', methods=['GET'])(categoria_peliculas)
 app.route('/movies/director', methods=['GET'])(director_peliculas)
 app.route('/movies/año', methods=['GET'])(año_peliculas)
 
+
+# inventeraio
+
+app.route('/inventario', methods=['GET'])(get_inventario)
+app.route('/inventario/<int:id_pelicula>', methods=['GET'])(get_one_inventario)
 
 
 if __name__ == '__main__':
