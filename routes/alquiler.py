@@ -7,36 +7,32 @@ def obtener_info_por_titulo(titulo):
     conn = connectdb()
     cur = conn.cursor()
     cur.execute(
-    """SELECT p.id_pelicula, p.titulo, p.año, p.director, p.categoria, p.precio, i.cantidad
-    FROM peliculas p
-    JOIN inventario i ON p.id_pelicula = i.id_pelicula
-    WHERE p.titulo = '%s' """, (titulo,))
+        """SELECT p.id_pelicula, p.titulo, p.año, p.director, p.categoria, p.precio, i.cantidad
+        FROM peliculas p
+        JOIN inventario i ON p.id_pelicula = i.id_pelicula
+        WHERE p.titulo = %s""",
+        (titulo,)
+    )
     dato_pelicula = cur.fetchone()
-    print("dato_cliente")
+    print("dato_pelicula")
     if dato_pelicula:
-        dato = {'id_pelicula': dato_pelicula[0], 'titulo': dato_pelicula[1], 'año': dato_pelicula[2], 'director': dato_pelicula[3], 'categoria': dato_pelicula[4],'precio': dato_pelicula[5], 'cantidad': dato_pelicula[6]}
-        conn.close()
-        return jsonify(dato)
-    else:
-        return 'The movie was not found'
-    
-def obtener_info_por_titulo_2():
-    conn = connectdb()
-    cur = conn.cursor()
-    cur.execute(
-    """SELECT p.id_pelicula, p.titulo, p.año, p.director, p.categoria, p.precio, i.cantidad
-    FROM peliculas p
-    JOIN inventario i ON p.id_pelicula = i.id_pelicula
-    WHERE p.titulo = 'Inception' """)
-    dato_pelicula = cur.fetchone()
-    print("dato_cliente")
-    if dato_pelicula:
-        dato = {'id_pelicula': dato_pelicula[0], 'titulo': dato_pelicula[1], 'año': dato_pelicula[2], 'director': dato_pelicula[3], 'categoria': dato_pelicula[4],'precio': dato_pelicula[5], 'cantidad': dato_pelicula[6]}
+        dato = {
+            'id_pelicula': dato_pelicula[0],
+            'titulo': dato_pelicula[1],
+            'año': dato_pelicula[2],
+            'director': dato_pelicula[3],
+            'categoria': dato_pelicula[4],
+            'precio': dato_pelicula[5],
+            'cantidad': dato_pelicula[6]
+        }
         conn.close()
         return jsonify(dato)
     else:
         return 'The movie was not found'
 
+    
+# Obtain all information in the inventary
+    
 def obtener_info_todas_peliculas():
     conn = connectdb()
     cur = conn.cursor()
