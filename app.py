@@ -1,9 +1,11 @@
+from imaplib import _Authenticator
 from flask import Flask, render_template
 from routes.empleados import *
 from routes.cliente import *
 from routes.pagos import *
 from routes.alquiler import *
 from routes.inventario import *
+from routes.templates import *
 
 
 
@@ -87,11 +89,44 @@ app.route('/inventario/<int:id_pelicula>', methods=['GET'])(get_one_inventario)
 #pruebas templates
 @app.route('/prueba')
 def prueba():
+    
     return render_template('login.html')
 
 
-@app.route('/admin')
+# REgistro de nuevo empleado
+@app.route('/admin', methods=['GET','POST'])
 def admin():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        nombre = request.form.get('nombre')
+        apellido = request.form.get('apellido')
+        cargo = request.form.get('cargo')
+
+        create_user(nombre, apellido, cargo, username, password)
+
+    
     return render_template('registro.html')
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login_route():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        login_result = login(username, password)
+        
+        if login_result:
+            return redirect('/admin')
+
+    
+    return render_template("login.html")
+
+
+@app.route("/panel")
+def panel():
+    return "hola"
+
 if __name__ == '__main__':
     app.run(debug=True)

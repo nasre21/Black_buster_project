@@ -1,28 +1,40 @@
-from flask import jsonify, request
+from flask import jsonify, redirect, request, session
 from database.db import connectdb
+from auth.auth import *
 
-def create_user(username, password):
+
+
+def     create_user(nombre, apellido, cargo, username, password):
+
+    username = request.form.get('username')
+    password = request.form.get('password')
+    nombre = request.form.get('nombre')
+    apellido = request.form.get('apellido')
+    cargo = request.form.get('cargo')
+
+    payload = {"password": password}
+    token = generate_token(payload)
+
     try:
-        con = connectdb()
-        cur = con.cursor()
+        with connectdb() as con:
+            cur = con.cursor()
 
-        cur.execute("START TRANSACTION")
+            cur.execute("START TRANSACTION")
 
-        cur.execute("""
-            INSERT INTO empleados (nombre, apellido, cargo)
-            VALUES (%s, %s, %s)
-        """, ('Anyell', 'Mendoza Lopez', 'Dependiente'))
+            cur.execute(
+                "INSERT INTO empleados (nombre, apellido, cargo) VALUES (%s, %s, %s)",
+                (nombre, apellido, cargo)
+            )
+            id_empleado = cur.lastrowid
 
-        id_empleado = cur.lastrowid
+            cur.execute(
+                "INSERT INTO users (id_empleado, username, password) VALUES (%s, %s, %s)",
+                (id_empleado, username, token)
+            )
 
-        cur.execute("""
-            INSERT INTO users (id_empleado, username, password)
-            VALUES (%s, %s, %s)
-        """, (id_empleado, username, password))
+            con.commit()
 
-        con.commit()
-
-        return jsonify({'message': 'User created successfully'})
+            return jsonify({'message': 'User created successfully'})
 
     except Exception as e:
         con.rollback()
@@ -30,4 +42,27 @@ def create_user(username, password):
 
     finally:
         cur.close()
-        con.close()
+
+
+
+def login(username, password):
+    con = connectdb()
+    cur = con.cursor()
+    cur.execute("SELECT * FROM users WHERE username = %s", (username,))
+    result = cur.fetchone()
+
+    if result is not None:
+        username_db = result[1]
+        password_db = result[2]
+        password_uncoded = decode_token(password_db)
+
+        if username_db == username and password_uncoded == password:
+            session['username'] = username
+            session['password'] = password
+            return redirect('/panel')
+
+    return False
+
+
+
+    

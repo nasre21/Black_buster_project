@@ -1,5 +1,7 @@
 import jwt
-from flask import current_app as app
+from app import app
+
+app.secret_key = "secret"
 
 def generate_token(payload):
     return jwt.encode(payload, app.secret_key, algorithm="HS256")
