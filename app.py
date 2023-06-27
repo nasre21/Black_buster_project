@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from routes.empleados import *
 from routes.cliente import *
 from routes.pagos import *
@@ -81,5 +81,10 @@ app.route('/inventario', methods=['GET'])(get_inventario)
 app.route('/inventario/<int:id_pelicula>', methods=['GET'])(get_one_inventario)
 
 
+
+#pruebas templates
+@app.route('/prueba')
+def prueba():
+    return render_template('login.html')
 if __name__ == '__main__':
     app.run(debug=True)
