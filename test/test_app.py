@@ -33,6 +33,5 @@ def test_add_empleado(mock_connectdb, client):
     mock_conn.commit.assert_called_once()
     mock_conn.close.assert_called_once()
 
-
-
+    # Verificar el contenido de la respuesta
     assert response.get_data(as_text=True) == 'Empleado agregado'
