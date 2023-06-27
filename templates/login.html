@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+
     <title>Login </title>
 </head>
 <body>
     <div class="container text-center mt-5 ">
+
     <h1 class="titulo my-5">Login panel administrador</h1>
-    <form method="POST" class="border-1">
+
+    <form method="POST" class="form d-flex flex-column ">
         <label for="username">Nombre de usuario:</label>
-        <input type="text" name="username" id="username" required><br><br>
+        <input class="w-50  mx-auto" type="text" name="username" id="username" required><br><br>
 
         <label for="password">Contraseña:</label>
-        <input type="password" name="password" id="password" required><br><br>
+        <input class="w-50  mx-auto" type="password" name="password" id="password" required><br><br>
 
-        <input type="submit" value="Iniciar sesión">
+        <input class="w-75 mx-auto" type="submit" value="Iniciar sesión">
     </form>
     </div>
 

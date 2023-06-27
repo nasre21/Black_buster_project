@@ -88,5 +88,10 @@ app.route('/inventario/<int:id_pelicula>', methods=['GET'])(get_one_inventario)
 @app.route('/prueba')
 def prueba():
     return render_template('login.html')
+
+
+@app.route('/admin')
+def admin():
+    return render_template('registro.html')
 if __name__ == '__main__':
     app.run(debug=True)
