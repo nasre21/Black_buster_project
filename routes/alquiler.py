@@ -100,44 +100,34 @@ def obtener_info_todas_alquiler():
     else:
         return 'The movies was not found'  
 
-#Return movie by id EN PROGRESS
-# def return_movie(id_alquiler):
-#     conn = connectdb()
-#     cur = conn.cursor()
-
-#     data = request.get_json()
-
-#     if "fecha_devolucion" in data:
-#         fecha_devolucion = data["fecha_devolucion"]
-#         cur.execute('UPDATE alquiler SET fecha_devolucion = CURDATE() WHERE id_alquiler = %s', (fecha_devolucion, id_alquiler))
-
-#     conn.commit()
-#     conn.close()
-
-#     return 'Register updated'
-
 # Returning movie
 def return_movie(id_alquiler):
     conn = connectdb()
     cur = conn.cursor()
 
     data = request.get_json()
-    id_pelicula = data.get('id_pelicula')
     new_fecha_devolucion = data.get('fecha_devolucion')
-
     cur.execute('UPDATE alquiler SET fecha_devolucion = %s WHERE id_alquiler = %s', (new_fecha_devolucion, id_alquiler))
-    conn.commit()
-    conn.close()
-    increase_cantidad_inventario(id_pelicula)
-    return 'Fecha de devolución actualizada'
+    cur.execute('SELECT id_pelicula FROM alquiler WHERE id_alquiler = %s', (id_alquiler,))
+    result = cur.fetchone()
+    
+    if result is not None:
+        id_pelicula = result[0]
+        print(">>>>>Aqui estoy<<<", id_pelicula)
+        conn.commit()
+        conn.close()
+        print(">>>>>Estoy fuera<<<", id_pelicula)
+        increase_cantidad_inventario(id_pelicula)
+        return 'Fecha de devolución actualizada'
+    else:
+        conn.close()
+        return 'No se encontró el alquiler con el ID especificado'
 
 #D
 def increase_cantidad_inventario(id_pelicula):
     conn = connectdb()
     cur = conn.cursor()
-
     # Restar uno a la cantidad del inventario de la película
     cur.execute("UPDATE inventario SET cantidad = cantidad + 1 WHERE id_pelicula = %s", (id_pelicula,))
     conn.commit()
-
     conn.close()
