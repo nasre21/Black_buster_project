@@ -44,10 +44,12 @@ app.route("/pagos_asc", methods=["GET"])(get_payment_asc)
 
 
 # Routes Alquiler""
-app.route('/alquiler/registers', methods=['GET'])(obtener_info_todas_alquiler)
-app.route("/alquiler/info/<titulo>", methods=["GET"])(obtener_info_por_titulo)
-app.route("/alquiler/info/todas", methods=["GET"])(obtener_info_todas_peliculas)
-app.route("/alquiler/add_register", methods=["POST"])(add_rent)
+app.route('/alquiler/all_registers', methods=['GET'])(obtener_info_todas_alquiler)
+app.route("/alquiler/info_register_inventary/<titulo>", methods=["GET"])(obtener_info_por_titulo)
+app.route("/alquiler/info_register_all", methods=["GET"])(obtener_info_todas_peliculas)
+app.route("/alquiler/new_register", methods=["POST"])(add_rent)
+app.route("/alquiler/return/<id_alquiler>", methods=['PUT', 'PATCH', 'GET'])(return_movie)
+
 
 
 
