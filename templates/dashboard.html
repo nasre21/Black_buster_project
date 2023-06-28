@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Título del Dashboard</title>
+    <!-- Aquí puedes incluir tus estilos CSS y scripts JS comunes -->
+  </head>
+  <body>
+    <h1>Bienvenido al Dashboard</h1>
+    
+    <p>Aquí va el contenido del dashboard...</p>
+    
+    <form action="{{ url_for('logout') }}" method="POST">
+      <button type="submit" class="btn btn-primary">Cerrar sesión</button>
+    </form>
+    
+  </body>
+</html>
