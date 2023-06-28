@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify, request, make_response
 from database.db import connectdb
 
 def add_empleado():
@@ -16,14 +16,26 @@ def add_empleado():
     print('Empleado creado')
     return "Empleado agregado"
 
+from flask import make_response, jsonify
+
 def get_empleados():
     conn = connectdb()
     cur = conn.cursor()
-    cur.execute('SELECT * FROM empleados')
-    datos_empleados = cur.fetchall()
-    data = [{'id_empleado': dato[0], 'empleados': dato[1], 'cargo': dato[3]} for dato in datos_empleados]
-    conn.close()
-    return jsonify(data)
+    try:
+        cur.execute('SELECT * FROM empleados')
+        datos_empleados = cur.fetchall()
+        data = [{'id_empleado': dato[0], 'empleados': dato[1], 'cargo': dato[3]} for dato in datos_empleados]
+        conn.close()
+
+        response = make_response(jsonify(data))
+        response.status_code = 200  # Código de estado 200 (OK)
+    except:
+        # Manejo de errores en caso de fallo en la consulta o conexión a la base de datos
+        conn.close()
+        response = make_response("Error en la consulta a la base de datos", 500)  # Código de estado 500 (Internal Server Error)
+
+    return response
+
 
 def obtener_empleado_por_id(id_empleado):
     conn = connectdb()
@@ -45,7 +57,7 @@ def del_empleado(id_empleado):
     conn.commit()
     conn.close()
     print("Empleado eliminado !!")
-    return ""
+    return "Empleado eliminado !!"
 
 def update_empleado(id_empleado):
     conn = connectdb()
