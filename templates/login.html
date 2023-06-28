@@ -7,12 +7,21 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 
     <title>Login </title>
+    <style>
+        .error-message {
+          font-size: 18px;
+          color: red;
+        }
+      </style>
 </head>
 <body>
     <div class="container text-center mt-5 ">
 
     <h1 class="titulo my-5">Login panel administrador</h1>
 
+    {% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
     <form method="POST" class="form d-flex flex-column ">
         <label for="username">Nombre de usuario:</label>
         <input class="w-50  mx-auto" type="text" name="username" id="username" required><br><br>
