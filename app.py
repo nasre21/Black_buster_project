@@ -128,5 +128,15 @@ def login_route():
 def panel():
     return "hola"
 
+#######################YORLIN #####################
+#Creando mi Decorador para la consulta de la pelicula
+
+app.route("/buscar-titulo", methods=["GET", "POST"])(buscarTitulo)
+
+#Redireccionando cuando la página no existe
+# @app.errorhandler(404)
+# def not_found(error):
+#         return render_template("busqueda.html")
+
 if __name__ == '__main__':
     app.run(debug=True)
