@@ -1,0 +1,151 @@
+{% extends "./plantilla.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block head %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#addMovieForm').submit(function (event) {
+                event.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+
+                var formData = {
+                    titulo: $('#titulo').val(),
+                    año: $('#año').val(),
+                    director: $('#director').val(),
+                    categoria: $('#categoria').val(),
+                    precio: $('#precio').val()
+                };
+
+                $.ajax({
+                    url: "{{ url_for('add_movie') }}",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        $('#mensaje').text('Película agregada');
+                        $('#addMovieForm')[0].reset();
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // Obtener todos los botones de borrado por su clase
+        const botonesBorrar = document.querySelectorAll('.btn-borrar');
+        
+        // Iterar sobre los botones y agregar un controlador de eventos a cada uno
+        botonesBorrar.forEach((boton) => {
+        boton.addEventListener('click', () => {
+        const idPelicula = boton.getAttribute('data-id');
+        
+        // Realizar la solicitud AJAX para borrar la película
+        fetch(`/movies_del/${id_pelicula}`, {
+        method: 'POST',
+        })
+        .then((response) => response.text())
+        .then((data) => {
+        console.log(data); // Puedes mostrar o realizar acciones adicionales en función de la respuesta
+        location.reload(); // Recargar la página después de borrar la película
+        })
+    
+    .catch((error) => {
+    console.error(error);
+    });
+    });
+    });
+</script>
+
+<script>
+    // Función para enviar la solicitud de eliminación al servidor
+    function borrarPelicula(idPelicula) {
+        if (confirm('¿Estás seguro de que deseas eliminar esta película?')) {
+            // Realizar la solicitud AJAX al servidor
+            $.ajax({
+                url: '/borrar-pelicula/' + idPelicula,
+                type: 'DELETE',
+                success: function (response) {
+                    alert('Película eliminada correctamente');
+                    // Actualizar la tabla después de eliminar la película
+                    obtenerPeliculas();
+                },
+                error: function (error) {
+                    alert('Error al eliminar la película');
+                }
+            });
+        }
+    }
+
+    // Función para obtener las películas actualizadas y actualizar la tabla
+    function obtenerPeliculas() {
+        $.ajax({
+            url: '/get-movie',
+            type: 'GET',
+            success: function (response) {
+                $('#tabla-peliculas').html(response);
+            },
+            error: function (error) {
+                alert('Error al obtener las películas');
+            }
+        });
+    }
+</script>
+
+
+{% endblock %}
+
+{% block content %}
+    <h1>Datos tabla peliculas</h1>
+    <div id="mensaje"></div>
+    <form id="addMovieForm">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" required><br>
+    
+        <label for="año">Año:</label>
+        <input type="number" id="año" name="año" required><br>
+    
+        <label for="director">Director:</label>
+        <input type="text" id="director" name="director" required><br>
+    
+        <label for="categoria">Categoría:</label>
+        <input type="text" id="categoria" name="categoria" required><br>
+    
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" name="precio" step="0.01" required><br>
+    
+        <button type="submit">Agregar Película</button>
+    </form>
+<div class="table-responsive" style="max-height: 300px;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID Pelicula</th>
+                <th>Titulo</th>
+                <th>Anio</th>
+                <th>Director</th>
+                <th>Categoria</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody class="overflow-auto" style="max-height: 100px;">
+            {% for pelicula in data %}
+            <tr>
+                <td>{{ pelicula.id_pelicula }}</td>
+                <td>{{ pelicula.titulo }}</td>
+                <td>{{ pelicula.año }}</td>
+                <td>{{ pelicula.director }}</td>
+                <td>{{ pelicula.categoria }}</td>
+                <td>{{ pelicula.precio }}</td>
+                <td>
+                    <button class="btn-borrar" onclick="borrarPelicula({{ pelicula.id_pelicula }})">Borrar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
