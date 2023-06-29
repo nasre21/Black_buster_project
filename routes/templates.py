@@ -1,18 +1,34 @@
-from flask import jsonify, redirect, request, session
+from flask import jsonify, redirect, render_template, request, session
 from database.db import connectdb
 from auth.auth import *
+from app import app
+
+app.secret_key = 'secret'
 
 
 
 def     create_user(nombre, apellido, cargo, username, password):
-
+    con = connectdb()
+    cur = con.cursor()
+   
     username = request.form.get('username')
     password = request.form.get('password')
     nombre = request.form.get('nombre')
     apellido = request.form.get('apellido')
     cargo = request.form.get('cargo')
 
+    cur.execute("SELECT * FROM users WHERE username = %s", (username,))
+    result = cur.fetchone()
+    if result:
+            error_message = (
+                "El usuario ya existe. Por favor, elige otro nombre de usuario."
+            )
+            return render_template("registro.html", error_message=error_message)
+
+
+
     payload = {"password": password}
+
     token = generate_token(payload)
 
     try:
@@ -43,25 +59,6 @@ def     create_user(nombre, apellido, cargo, username, password):
     finally:
         cur.close()
 
-
-
-def login(username, password):
-    con = connectdb()
-    cur = con.cursor()
-    cur.execute("SELECT * FROM users WHERE username = %s", (username,))
-    result = cur.fetchone()
-
-    if result is not None:
-        username_db = result[1]
-        password_db = result[2]
-        password_uncoded = decode_token(password_db)
-
-        if username_db == username and password_uncoded == password:
-            session['username'] = username
-            session['password'] = password
-            return redirect('/panel')
-
-    return False
 
 
 

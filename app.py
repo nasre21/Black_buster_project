@@ -1,18 +1,16 @@
-from imaplib import _Authenticator
-from flask import Flask, render_template
+from flask import Flask
+import jwt
+from auth.auth import *
 from routes.empleados import *
 from routes.cliente import *
 from routes.pagos import *
 from routes.alquiler import *
 from routes.inventario import *
-from routes.templates import *
-
-
-
 from routes.films import *
 from routes.inventario import *
 
 app = Flask(__name__)
+app.secret_key = "otorinolaringolo"
 
 # Rutas empleados
 app.route('/empleado_add', methods=['POST'])(add_empleado)
@@ -84,49 +82,24 @@ app.route('/movies/año', methods=['GET'])(año_peliculas)
 app.route('/inventario', methods=['GET'])(get_inventario)
 app.route('/inventario/<int:id_pelicula>', methods=['GET'])(get_one_inventario)
 
+#login, inicio de sesión y cerrar sesión
+
+app.route("/login", methods=["GET","POST"])(login)
+app.route('/logout', methods=['POST'])(logout)
+app.route("/dashboard")(login_required(dashboard))
 
 
-#pruebas templates
-@app.route('/prueba')
-def prueba():
-    
-    return render_template('login.html')
+  
 
+#######################YORLIN #####################
+#Creando mi Decorador para la consulta de la pelicula
 
-# REgistro de nuevo empleado
-@app.route('/admin', methods=['GET','POST'])
-def admin():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        nombre = request.form.get('nombre')
-        apellido = request.form.get('apellido')
-        cargo = request.form.get('cargo')
+app.route("/buscar-titulo", methods=["GET", "POST"])(buscarTitulo)
 
-        create_user(nombre, apellido, cargo, username, password)
-
-    
-    return render_template('registro.html')
-
-
-@app.route("/login", methods=["GET", "POST"])
-def login_route():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        
-        login_result = login(username, password)
-        
-        if login_result:
-            return redirect('/admin')
-
-    
-    return render_template("login.html")
-
-
-@app.route("/panel")
-def panel():
-    return "hola"
+#Redireccionando cuando la página no existe
+# @app.errorhandler(404)
+# def not_found(error):
+#         return render_template("busqueda.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
