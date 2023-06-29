@@ -53,7 +53,7 @@ def del_movie(id_pelicula):
     conn.commit()
     conn.close()
     print("pelicula eliminada !!")
-    return "removed movie"
+    return 'removed movie !!'
 
 
 def update_pelicula(id_pelicula):

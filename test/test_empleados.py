@@ -33,7 +33,7 @@ def test_get_empleados(client):
         assert 'cargo' in empleado
 
 def test_obtener_empleado_por_id(client):
-    response = client.get('/obtener_empleado/36')
+    response = client.get('/obtener_empleado/46')
     assert response.status_code == 200
     # Verificar la estructura y los datos de la respuesta JSON
     data = response.get_json()
