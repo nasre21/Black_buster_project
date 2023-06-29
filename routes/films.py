@@ -1,4 +1,4 @@
-from flask import jsonify, request, render_template
+from flask import jsonify, request, render_template, redirect
 from database.db import connectdb
 
 
@@ -52,7 +52,8 @@ def del_movie(id_pelicula):
     conn.commit()
     conn.close()
     print("pelicula eliminada !!")
-    return ""
+    
+    return redirect("/movies")
 
 
 def update_pelicula(id_pelicula):
