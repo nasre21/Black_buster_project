@@ -1,0 +1,40 @@
+
+{% extends '/busqueda.html' %}
+
+{% block body %}
+<div id="resultado" class="text-center">
+    <h4 class="te}xt-center">Resultado <hr></h4>
+    {% if (miData) %}    <!--Si existe-->
+    <section>
+        <p>
+            id_pelicula: <strong>{{ miData[0]}}</strong>               
+        </p>
+        <p>
+            Titulo: <strong>{{ miData[1] }}</strong>          
+        </p>
+        <p>
+            Año: <strong>{{ miData[2] }}</strong>          
+        </p>
+        <p>
+            Director: <strong>{{ miData[3] }}</strong>          
+        </p>
+        <p>
+            Categoria: <strong>{{ miData[4] }}</strong>          
+        </p>
+        <p>
+            Precio: <strong>{{ miData[5] }}</strong>          
+        </p>
+        <p>
+            Cantidad: <strong>{{ miData[6] }}</strong>          
+        </p>
+    </section>
+        
+    {% else %}
+        <p>No hay resultados para la busqueda:
+            <strong class="busq colorCrimson"> {{ busqueda }}</strong>
+        </p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

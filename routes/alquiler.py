@@ -1,5 +1,6 @@
-from flask import jsonify, request
+from flask import jsonify, request, Flask, render_template, redirect, url_for
 from database.db import connectdb
+
 
 # Obtain all information by tittle
 
@@ -131,3 +132,24 @@ def increase_cantidad_inventario(id_pelicula):
     cur.execute("UPDATE inventario SET cantidad = cantidad + 1 WHERE id_pelicula = %s", (id_pelicula,))
     conn.commit()
     conn.close()
+    
+
+##############BUSCADOR DE PEL��CULAS##############
+def buscarTitulo():
+    if request.method == 'POST':
+        print("+++++++ recibe peticion post")
+        search = request.form['buscar']
+        print("+++++++ recibe buscador",search)
+        conn = connectdb()
+        cur = conn.cursor()
+        cur.execute(
+            """SELECT p.id_pelicula, p.titulo, p.año, p.director, p.categoria, p.precio, i.cantidad
+            FROM peliculas p
+            JOIN inventario i ON p.id_pelicula = i.id_pelicula
+            WHERE p.titulo = %s""",
+            (search,)
+        )
+        resultadoBusqueda = cur.fetchone()
+        conn.close()
+        return render_template('/resultadoBusqueda.html', miData = resultadoBusqueda, busqueda = search)
+    return render_template("busqueda.html")
