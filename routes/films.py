@@ -6,20 +6,19 @@ def add_movie():
     conn = connectdb()
     cur = conn.cursor()
     data = request.get_json()
-    
+
     titulo = data['titulo']
     año = data['año']
     director = data['director']
     categoria = data['categoria']
     precio = data['precio']
-    
-    
-    cur.execute('INSERT INTO peliculas (titulo, año, director, categoria, precio) VALUES (%s, %s, %s,%s, %s)',(titulo, año, director, categoria, precio))
-    
+
+    cur.execute('INSERT INTO peliculas (titulo, año, director, categoria, precio) VALUES (%s, %s, %s, %s, %s)', (titulo, año, director, categoria, precio))
+
     conn.commit()
     conn.close()
     print('films created')
-    return "Films add"
+    return jsonify({'message': 'Film added'})
 
 def get_movie():
     conn = connectdb()
