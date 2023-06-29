@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify, request, render_template
 from database.db import connectdb
 
 
@@ -28,7 +28,8 @@ def get_movie():
     datos_peliculas = cur.fetchall()
     data = [{'id_pelicula': dato[0], 'titulo': dato[1], 'año': dato[2], 'director': dato[3], 'categoria': dato[4],'precio': dato[5]} for dato in datos_peliculas]
     conn.close()
-    return jsonify(data)
+    return render_template('dashboard.html', data=data)
+ 
 
 
 def get_one(id_pelicula):
@@ -52,7 +53,7 @@ def del_movie(id_pelicula):
     conn.commit()
     conn.close()
     print("pelicula eliminada !!")
-    return "removed movie !!"
+    return ""
 
 
 def update_pelicula(id_pelicula):
