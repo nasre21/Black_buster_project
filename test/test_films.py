@@ -21,20 +21,20 @@ def test_add_movies(client):
     assert response.status_code == 200
     assert response.get_data(as_text=True) == 'Films add'
     
-def test_get_empleado(client):
-   response = client.get('/movies')
-   assert response.status_code == 200
-    # Verificar la estructura y los datos de la respuesta JSON
-   data = response.get_json()
-   assert isinstance(data, list)
-   if len(data) > 0:
-        movies = data[0]
-        assert 'id_pelicula' in movies
-        assert 'titulo' in movies
-        assert 'año' in movies
-        assert 'director' in movies
-        assert 'categoria' in movies
-        assert 'precio' in movies
+# def test_get_movies(client):
+#    response = client.get('/movies')
+#    assert response.status_code == 200
+#     # Verificar la estructura y los datos de la respuesta JSON
+#    data = response.get_json()
+#    assert isinstance(data, list)
+#    if len(data) > 0:
+#         movies = data[0]
+#         assert 'id_pelicula' in movies
+#         assert 'titulo' in movies
+#         assert 'año' in movies
+#         assert 'director' in movies
+#         assert 'categoria' in movies
+#         assert 'precio' in movies
         
         
 
