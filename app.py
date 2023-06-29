@@ -8,10 +8,16 @@ from routes.alquiler import *
 from routes.inventario import *
 from routes.films import *
 from routes.inventario import *
-from routes.templates import *
+from routes.templates import create_user
 
 app = Flask(__name__)
-app.secret_key = "otorinolaringolo"
+
+def secret_key():
+    app.secret_key = "secret"
+    return app.secret_key
+
+key = secret_key()
+
 
 # Rutas empleados
 app.route('/empleado_add', methods=['POST'])(add_empleado)
@@ -87,7 +93,10 @@ app.route('/inventario/<int:id_pelicula>', methods=['GET'])(get_one_inventario)
 
 app.route("/", methods=["GET","POST"])(login)
 app.route('/logout', methods=['POST'])(logout)
-app.route("/create_user", methods=["POST"])(create_user)
+@app.route('/create_user', methods=['POST'])
+def register():
+    app.secret_key = "secret"
+    return create_user(app.secret_key)
 
 
   
