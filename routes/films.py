@@ -17,7 +17,7 @@ def add_movie():
     conn.commit()
     conn.close()
     print('films created')
-    return jsonify({'message': 'Film added'})
+    return redirect("/movies")
 
 def get_movie():
     conn = connectdb()
