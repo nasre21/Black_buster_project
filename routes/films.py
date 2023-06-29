@@ -1,5 +1,6 @@
 from flask import jsonify, request, render_template, redirect
 from database.db import connectdb
+from auth.auth import *
 
 
 def add_movie():

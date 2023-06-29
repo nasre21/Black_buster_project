@@ -8,9 +8,16 @@ from routes.alquiler import *
 from routes.inventario import *
 from routes.films import *
 from routes.inventario import *
+from routes.templates import create_user
 
 app = Flask(__name__)
-app.secret_key = "otorinolaringolo"
+
+def secret_key():
+    app.secret_key = "secret"
+    return app.secret_key
+
+key = secret_key()
+
 
 # Rutas empleados
 app.route('/empleado_add', methods=['POST'])(add_empleado)
@@ -61,7 +68,7 @@ app.route('/inventario', methods=['GET'])(get_inventario)
 #Movies Path
 
 app.route('/movies_add', methods =['POST'])(add_movie)
-app.route('/movies', methods =['GET'])(get_movie)
+app.route('/movies', methods =['GET','POST'])(get_movie)
 app.route('/movies/<int:id_pelicula>', methods=['GET'])(get_one)
 app.route('/movies_del/<int:id_pelicula>', methods=['POST'])(del_movie)
 app.route("/movies/<int:id_pelicula>", methods=["PATCH"])(update_pelicula)
@@ -84,9 +91,12 @@ app.route('/inventario/<int:id_pelicula>', methods=['GET'])(get_one_inventario)
 
 #login, inicio de sesión y cerrar sesión
 
-app.route("/login", methods=["GET","POST"])(login)
+app.route("/", methods=["GET","POST"])(login)
 app.route('/logout', methods=['POST'])(logout)
-app.route("/dashboard")(login_required(dashboard))
+@app.route('/create_user', methods=['POST'])
+def register():
+    app.secret_key = "secret"
+    return create_user(app.secret_key)
 
 
   
