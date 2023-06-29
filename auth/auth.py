@@ -13,6 +13,7 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 def login():
     if request.method == "POST":
         username = request.form.get("username")
@@ -31,12 +32,14 @@ def login():
 
             if username == username_db and password == password_uncoded["password"]:
                 session["username_db"] = username_db
-                return redirect("/dashboard")
+                return redirect("/movies")
 
         error_message = "El usuario o la contraseña son incorrectos."
         return render_template("login.html", error_message=error_message)
 
     return render_template("login.html")
+
+
 
 def logout():
     session.pop('username_db', None)
@@ -45,5 +48,3 @@ def logout():
     flash('Sesión cerrada correctamente')
     return redirect(url_for('login'))
 
-def dashboard():
-    return render_template("dashboard.html")

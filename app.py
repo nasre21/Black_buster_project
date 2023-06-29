@@ -86,7 +86,6 @@ app.route('/inventario/<int:id_pelicula>', methods=['GET'])(get_one_inventario)
 
 app.route("/", methods=["GET","POST"])(login)
 app.route('/logout', methods=['POST'])(logout)
-app.route("/dashboard")(login_required(dashboard))
 
 
   

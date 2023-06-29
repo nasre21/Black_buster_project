@@ -1,5 +1,6 @@
 from flask import jsonify, request, render_template
 from database.db import connectdb
+from auth.auth import *
 
 
 def add_movie():
@@ -20,7 +21,7 @@ def add_movie():
     conn.close()
     print('films created')
     return "Films add"
-
+@login_required
 def get_movie():
     conn = connectdb()
     cur = conn.cursor()
