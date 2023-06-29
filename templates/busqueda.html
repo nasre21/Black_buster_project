@@ -4,22 +4,24 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
   <title>Buscador con Python - Flask & MySQL</title>
 
 </head>
 <body>
 
-  <header>
+  <header class="buscadorPelicula">
     <div class="logo">
-      <a href="/">
-        <i class="bi bi-code-slash"></i>
+      <a href="/buscar-titulo">
+        <p>Busqueda..</p>
       </a>
     </div>
     <nav>
       <div class="search-bar">
         <form name="buscar" method="POST" action="/buscar-titulo" class="search" autocomplete="off">
-          <input type="search" name="buscar" class="search__input" placeholder="Buscador con Python - Flask & MySQL" required>
-          <button type="submit" class="search__btn">
+          <input type="search" name="buscar" class="search__input" placeholder="Buscador de pelicula" required>
+          <button type="submit" class="btn btn-primary">
             <i class="bi bi-search search__icon"></i>
             Buscar
           </button>
@@ -36,11 +38,12 @@
   {% block body %}
 
     <h1 class="text-center">
-      Buscador con PYHTON
+      Buscador de peliculas
     </h1>
 
   {% endblock %}
 </div>
 
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 </body>
 </html>
