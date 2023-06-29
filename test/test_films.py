@@ -54,8 +54,8 @@ def test_obtener_movie_por_id(client):
 def test_del_movie(client):
     response = client.delete('/movies_del/2')
     assert response.status_code == 200
-    assert response.get_data(as_text=True) == 'removed movie'
-    # 
+    assert response.get_data(as_text=True) == 'removed movie !!'
+    
 def test_update_movies(client):
     response = client.patch('/movies/5', json={'id_peliculas':3,'titulo':'el padrino','año':2005, 'direccion':'Francis Ford Coppola','categoria':'drama', 'precio':10})
     assert response.status_code == 200
