@@ -18,8 +18,8 @@ def add_cliente():
     cur.execute('INSERT INTO clientes (nombre, apellidos, edad, telefono, direccion, email) VALUES (%s, %s, %s, %s, %s, %s)', (nombre, apellidos, edad, telefono, direccion, email))
     conn.commit()
     conn.close()
-    print('Empleado creado')
-    return "Empleado agregado"
+    print('Cliente creado')
+    return "Cliente agregado"
 
 # Obtain a new client
 
