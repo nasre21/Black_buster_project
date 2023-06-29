@@ -8,6 +8,7 @@ from routes.alquiler import *
 from routes.inventario import *
 from routes.films import *
 from routes.inventario import *
+from routes.templates import *
 
 app = Flask(__name__)
 app.secret_key = "otorinolaringolo"
@@ -61,7 +62,7 @@ app.route('/inventario', methods=['GET'])(get_inventario)
 #Movies Path
 
 app.route('/movies_add', methods =['POST'])(add_movie)
-app.route('/movies', methods =['GET'])(get_movie)
+app.route('/movies', methods =['GET','POST'])(get_movie)
 app.route('/movies/<int:id_pelicula>', methods=['GET'])(get_one)
 app.route('/movies_del/<int:id_pelicula>', methods=['DELETE'])(del_movie)
 app.route("/movies/<int:id_pelicula>", methods=["PATCH"])(update_pelicula)
@@ -86,6 +87,7 @@ app.route('/inventario/<int:id_pelicula>', methods=['GET'])(get_one_inventario)
 
 app.route("/", methods=["GET","POST"])(login)
 app.route('/logout', methods=['POST'])(logout)
+app.route("/create_user", methods=["POST"])(create_user)
 
 
   
