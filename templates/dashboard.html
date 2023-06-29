@@ -4,37 +4,9 @@
 
 {% block head %}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#addMovieForm').submit(function (event) {
-                event.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
 
-                var formData = {
-                    titulo: $('#titulo').val(),
-                    año: $('#año').val(),
-                    director: $('#director').val(),
-                    categoria: $('#categoria').val(),
-                    precio: $('#precio').val()
-                };
 
-                $.ajax({
-                    url: "{{ url_for('add_movie') }}",
-                    type: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify(formData),
-                    success: function (response) {
-                        $('#mensaje').text('Película agregada');
-                        $('#addMovieForm')[0].reset();
-                    },
-                    error: function (error) {
-                        console.error(error);
-                    }
-                });
-            });
-        });
-    </script>
-
-    <script>
+    <!-- <script>
         // Obtener todos los botones de borrado por su clase
         const botonesBorrar = document.querySelectorAll('.btn-borrar');
         
@@ -93,7 +65,7 @@
             }
         });
     }
-</script>
+</script> -->
 
 
 {% endblock %}
@@ -101,12 +73,7 @@
 {% block content %}
     <h1>Datos tabla peliculas</h1>
     <div id="mensaje"></div>
-
-    <!-- <form action="{{ url_for('logout') }}" method="POST">
-        <button type="submit" class="btn btn-primary">Cerrar sesión</button>
-    </form> -->
-
-    <form id="addMovieForm">
+    <form id="addMovieForm" action="/add_movie" method="POST">
         <label for="titulo">Título:</label>
         <input type="text" id="titulo" name="titulo" required><br>
     
@@ -146,7 +113,10 @@
                 <td>{{ pelicula.categoria }}</td>
                 <td>{{ pelicula.precio }}</td>
                 <td>
-                    <button class="btn-borrar" onclick="borrarPelicula({{ pelicula.id_pelicula }})">Borrar</button>
+                    <form action="{{ url_for('del_movie', id_pelicula=pelicula.id_pelicula) }}" method="POST">
+                        <button type="submit" class="btn-borrar">Borrar</button>
+                    </form>
+                    
                 </td>
             </tr>
             {% endfor %}

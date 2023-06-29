@@ -63,7 +63,7 @@ app.route('/inventario', methods=['GET'])(get_inventario)
 app.route('/movies_add', methods =['POST'])(add_movie)
 app.route('/movies', methods =['GET'])(get_movie)
 app.route('/movies/<int:id_pelicula>', methods=['GET'])(get_one)
-app.route('/movies_del/<int:id_pelicula>', methods=['DELETE'])(del_movie)
+app.route('/movies_del/<int:id_pelicula>', methods=['POST'])(del_movie)
 app.route("/movies/<int:id_pelicula>", methods=["PATCH"])(update_pelicula)
 app.route('/movies/<int:id_pelicula>', methods=['GET'])(get_one)
 
