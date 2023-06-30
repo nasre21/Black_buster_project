@@ -3,69 +3,6 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block head %}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-    <!-- <script>
-        // Obtener todos los botones de borrado por su clase
-        const botonesBorrar = document.querySelectorAll('.btn-borrar');
-        
-        // Iterar sobre los botones y agregar un controlador de eventos a cada uno
-        botonesBorrar.forEach((boton) => {
-        boton.addEventListener('click', () => {
-        const idPelicula = boton.getAttribute('data-id');
-        
-        // Realizar la solicitud AJAX para borrar la película
-        fetch(`/movies_del/${id_pelicula}`, {
-        method: 'POST',
-        })
-        .then((response) => response.text())
-        .then((data) => {
-        console.log(data); // Puedes mostrar o realizar acciones adicionales en función de la respuesta
-        location.reload(); // Recargar la página después de borrar la película
-        })
-    
-    .catch((error) => {
-    console.error(error);
-    });
-    });
-    });
-</script>
-
-<script>
-    // Función para enviar la solicitud de eliminación al servidor
-    function borrarPelicula(idPelicula) {
-        if (confirm('¿Estás seguro de que deseas eliminar esta película?')) {
-            // Realizar la solicitud AJAX al servidor
-            $.ajax({
-                url: '/borrar-pelicula/' + idPelicula,
-                type: 'DELETE',
-                success: function (response) {
-                    alert('Película eliminada correctamente');
-                    // Actualizar la tabla después de eliminar la película
-                    obtenerPeliculas();
-                },
-                error: function (error) {
-                    alert('Error al eliminar la película');
-                }
-            });
-        }
-    }
-
-    // Función para obtener las películas actualizadas y actualizar la tabla
-    function obtenerPeliculas() {
-        $.ajax({
-            url: '/get-movie',
-            type: 'GET',
-            success: function (response) {
-                $('#tabla-peliculas').html(response);
-            },
-            error: function (error) {
-                alert('Error al obtener las películas');
-            }
-        });
-    }
-</script> -->
 
 
 {% endblock %}
