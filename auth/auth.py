@@ -30,7 +30,7 @@ def login():
 
             password_uncoded = jwt.decode(password_db, options={"verify_signature": False})
 
-            if username == username_db and password == password_uncoded["password"]:
+            if username == username_db and password == password_uncoded.get("password"):
                 session["username_db"] = username_db
                 return redirect("/movies")
 

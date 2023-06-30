@@ -10,7 +10,7 @@ def create_user(key):
     password = request.form['password']
 
     payloads = {
-        "contraseña": password
+        "password": password
     }
 
     con = connectdb()
